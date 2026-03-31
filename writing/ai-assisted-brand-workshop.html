@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building an AI-Assisted Brand Workshop From Scratch — TJ Cichecki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/article.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="../index.html" class="nav__logo">TJ Cichecki</a>
+      <ul class="nav__menu">
+        <li><a href="../index.html#approach" class="nav__link">Approach</a></li>
+        <li><a href="../index.html#work" class="nav__link">Work</a></li>
+        <li><a href="../index.html#ai" class="nav__link">AI</a></li>
+        <li><a href="../index.html#writing" class="nav__link">Writing</a></li>
+        <li><a href="../index.html#background" class="nav__link">Background</a></li>
+        <li><a href="../index.html#contact" class="nav__link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+      <div class="container">
+        <a href="../index.html#writing" class="article-back">&larr; Back to all notes</a>
+
+        <header class="article-header">
+          <span class="article-header__tag">AI + Workflow</span>
+          <h1 class="article-header__title">Building an AI-assisted brand workshop from scratch</h1>
+          <p class="article-header__meta">By <span>TJ Cichecki</span> &middot; December 2025</p>
+        </header>
+      </div>
+
+      <div class="container article-body">
+        <div class="article-body__content">
+          <p>For most of my career, I've run brand workshops the same way. Get stakeholders in a room for a half day or full day. Work through a series of exercises designed to surface how they think about their organization, what they value, who they're for, and where the gaps are between internal perception and external reality. Take the output from that session and synthesize it into a strategic brief that drives the creative work.</p>
+
+          <p>The format works. I've run it dozens of times across different types of organizations and it consistently produces useful, actionable output. But I always had the same frustration with it: the synthesis step was a bottleneck. I'd leave a workshop with pages of notes, whiteboard photos, Post-it clusters, and audio recordings, and it would take me days to process all of it into a coherent brief. The workshop itself might be four hours. The synthesis was often two or three times that.</p>
+
+          <p>About 18 months ago, I started rebuilding the entire workshop format around LLM tooling. Not to automate the facilitation or to have a model do the thinking for me, but to compress that synthesis bottleneck and, unexpectedly, to make the workshops themselves better.</p>
+
+          <h2>What the new format looks like</h2>
+
+          <p>The in-room experience hasn't changed dramatically. I still believe in the value of facilitated conversation. You can't replace the moment when a CEO says something offhand that makes the VP of Marketing's face change, because everyone in the room just realized they've been telling two different stories. That's a human moment. No tool is going to replicate it.</p>
+
+          <p>What has changed is the documentation layer that runs alongside the conversation. I use a real-time transcription tool during the workshop, and as the session progresses, I feed sections of the transcript into an LLM with specific prompts designed to extract different types of signal. Things like: recurring language patterns, points of agreement and disagreement between participants, emotional inflection points where energy in the room shifted, and concrete claims about the brand that could be pressure-tested.</p>
+
+          <p>By the end of the workshop, instead of a pile of raw notes, I have a preliminary synthesis that captures probably 70 percent of what I would have spent days assembling manually. That's not a finished brief. It's a structured first draft that I then spend my time refining, challenging, and rewriting based on my own judgment and experience.</p>
+
+          <h2>The exercises that changed</h2>
+
+          <p>Some of the traditional workshop exercises map naturally onto LLM-assisted workflows. Others don't. I've been experimenting with which is which.</p>
+
+          <h3>Competitive language analysis</h3>
+          <p>In a traditional workshop, I'd have participants look at competitor websites and discuss what they notice. It's useful but slow, and the observations tend to cluster around visual design rather than messaging. Now, before the workshop, I run competitor site copy through an LLM and generate a landscape analysis of how the category talks about itself. Common phrases, shared value propositions, messaging patterns, tone distribution. I present that analysis at the start of the workshop so the conversation can start at a higher level. Instead of "their website looks corporate," the discussion becomes "every company in this space leads with trust and reliability, so how do we differentiate when those are table stakes?"</p>
+
+          <h3>Brand voice exploration</h3>
+          <p>This used to be one of the harder exercises to make concrete in a workshop. You'd ask people to describe the brand as a person, or pick adjectives from a list, and the output was often too abstract to be actionable. Now I run the exercise differently. After participants give me their adjectives and personality descriptions, I feed them into an LLM in real time and generate sample copy in several different voice directions. The room hears their ideas come back as actual language within minutes, and the conversation shifts from theoretical to practical immediately. "Does this sound like us?" is a much more productive question than "What adjectives describe our brand?"</p>
+
+          <h3>Stakeholder alignment mapping</h3>
+          <p>One of the most valuable things a workshop reveals is where the leadership team disagrees, often without knowing they disagree. I used to have to identify those friction points manually by reviewing notes after the session. Now I use the running transcript to flag divergent positions in near real time. When the COO describes the company's primary audience as enterprise buyers and the CMO describes it as mid-market, the LLM catches that. I can surface it in the room while both people are still present and have the conversation that needs to happen, rather than discovering the misalignment during synthesis when it's too late to resolve it face to face.</p>
+
+          <h2>What I was wrong about</h2>
+
+          <p>When I started this process, I assumed the main benefit would be efficiency. Faster synthesis, fewer hours between workshop and deliverable, quicker turnaround for the client. And that's real. I've cut the post-workshop synthesis time by roughly 60 percent, which is significant for a solo practitioner managing multiple engagements.</p>
+
+          <p>But the bigger benefit turned out to be quality. The workshops themselves got better because the LLM tooling freed me up to be more present as a facilitator. When you're not scribbling notes and trying to capture every important statement, you can actually listen. You can follow up on the thing someone said that seemed to surprise the rest of the room. You can hold silence longer, because you're not worried about losing the thread. The documentation is being handled, so you can do the actual human work of reading the room and steering the conversation where it needs to go.</p>
+
+          <p>I was also wrong about what participants would think. I expected some resistance. Instead, the reaction has been consistently positive, especially when I show the in-session voice exploration output. There's something powerful about saying "here's what your brand could sound like" within the same meeting where you defined what the brand should be. It collapses the gap between strategy and execution in a way that builds confidence and buy-in.</p>
+
+          <h2>Where the tools fall short</h2>
+
+          <p>The LLM doesn't know when someone is being diplomatic instead of honest. It processes what was said, not what was meant. In every workshop, there are moments where the subtext matters more than the text, where someone's hesitation or word choice reveals something that a transcript can't capture. That reading is still entirely on me, and it's often where the most important insights come from.</p>
+
+          <p>The models also have a tendency to smooth things over. When I run divergent stakeholder positions through synthesis, the output often tries to reconcile them into a coherent narrative. Sometimes that's appropriate. Other times, the tension is the insight, and what the client needs to hear is "you have a real disagreement about who this brand is for, and you need to resolve it before the design work starts." The LLM wants to find harmony. My job is sometimes to point out that harmony hasn't been earned yet.</p>
+
+          <p>I've also learned that the quality of the prompts matters enormously and that writing good prompts for this kind of work is itself a skill that takes practice. The difference between a prompt that generates useful synthesis and one that generates generic summary is significant, and it maps directly to how well you understand the material you're asking the model to process. Which brings it right back to experience. The tool is only as good as the practitioner directing it.</p>
+
+          <h2>What I'd tell someone starting this</h2>
+
+          <p>Start with one exercise, not the whole workshop. Pick the part of your process where you spend the most time on work that feels mechanical rather than creative, and experiment with LLM tooling there. For me, that was synthesis. For you, it might be competitive research, or draft copy, or stakeholder interview summaries.</p>
+
+          <p>Don't trust the output without editing it. The model gives you a starting point. Your job is to know what's right, what's close but needs adjusting, and what's completely off. If you can't tell the difference, the tool isn't ready for you yet. Go do more of the work manually until you can.</p>
+
+          <p>And keep the human moments human. The part of a workshop where a founder tears up talking about why they started the company, the moment when two co-founders realize they've been working toward different visions, the quiet acknowledgment that what the brand says and what the brand does are not the same thing. Those moments are the work. Everything else is just infrastructure to support them.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <hr class="article-divider">
+        <div class="article-more">
+          <h3 class="article-more__heading">More notes</h3>
+          <div class="article-more__grid">
+            <a href="ai-wont-replace-designers.html" class="article-more__link">
+              <p class="article-more__link-tag">AI + Design</p>
+              <p class="article-more__link-title">Why AI won't replace designers, but designers who use AI will replace those who don't</p>
+            </a>
+            <a href="clarity-problem.html" class="article-more__link">
+              <p class="article-more__link-tag">Brand Strategy</p>
+              <p class="article-more__link-title">The clarity problem most brands don't know they have</p>
+            </a>
+            <a href="cross-industry-pattern-recognition.html" class="article-more__link">
+              <p class="article-more__link-tag">Process</p>
+              <p class="article-more__link-title">Cross-industry pattern recognition as a design advantage</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 TJ Cichecki / Workhorse Collective. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
