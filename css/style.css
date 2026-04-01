@@ -764,16 +764,29 @@ button {
   flex-direction: column;
   justify-content: flex-end;
   padding: 32px;
+}
+
+.writing__card--has-img .writing__card-content .writing__card-title,
+.writing__card--has-img .writing__card-content .writing__card-date {
   transform: translateY(0);
   transition: transform 0.35s ease;
 }
 
-.writing__card--has-img:hover .writing__card-content {
+.writing__card--has-img:hover .writing__card-content .writing__card-title,
+.writing__card--has-img:hover .writing__card-content .writing__card-date {
   transform: translateY(-8px);
 }
 
 .writing__card--has-img .writing__card-tag {
-  color: rgba(255,255,255,0.7);
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  color: #fff;
+  background-color: rgba(0,0,0,0.7);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.6875rem;
+  margin-bottom: 0;
 }
 
 .writing__card--has-img .writing__card-title {
