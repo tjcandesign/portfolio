@@ -726,8 +726,10 @@ button {
 
 /* Writing card with image thumbnail */
 .writing__card--has-img {
+  display: block;
   position: relative;
   min-height: 320px;
+  max-height: 320px;
   border: none;
 }
 
