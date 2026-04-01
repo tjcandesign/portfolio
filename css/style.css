@@ -684,6 +684,62 @@ button {
   color: var(--color-text-muted);
 }
 
+/* Writing card with image thumbnail */
+.writing__card--has-img {
+  position: relative;
+  min-height: 320px;
+  border: none;
+}
+
+.writing__card--has-img .writing__card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.writing__card--has-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+  z-index: 1;
+  border-radius: var(--radius);
+}
+
+.writing__card--has-img .writing__card-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 32px;
+}
+
+.writing__card--has-img .writing__card-tag {
+  color: rgba(255,255,255,0.7);
+}
+
+.writing__card--has-img .writing__card-title {
+  color: #fff;
+  font-size: 1.5rem !important;
+}
+
+.writing__card--has-img:hover .writing__card-title {
+  color: rgba(255,255,255,0.85);
+}
+
+.writing__card--has-img .writing__card-excerpt {
+  color: rgba(255,255,255,0.75);
+}
+
+.writing__card--has-img .writing__card-date {
+  color: rgba(255,255,255,0.5);
+}
+
 /* ========================================
    Personal / Outside the Studio
    ======================================== */
