@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code's Source Code Leaked — TJ Cichecki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/article.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="../index.html" class="nav__logo">TJ Cichecki</a>
+      <ul class="nav__menu">
+        <li><a href="../index.html#approach" class="nav__link">Approach</a></li>
+        <li><a href="../index.html#work" class="nav__link">Work</a></li>
+        <li><a href="../index.html#ai" class="nav__link">AI</a></li>
+        <li><a href="../index.html#writing" class="nav__link">Writing</a></li>
+        <li><a href="../index.html#background" class="nav__link">Background</a></li>
+        <li><a href="../index.html#contact" class="nav__link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+      <div class="container">
+        <a href="../index.html#writing" class="article-back">&larr; Back to all notes</a>
+
+        <header class="article-header">
+          <span class="article-header__tag">AI + Design</span>
+          <h1 class="article-header__title">Claude Code's Source Code Leaked. Here's What Designers Should Actually Care About.</h1>
+          <p class="article-header__meta">By <span>TJ Cichecki</span> &middot; March 2026</p>
+        </header>
+      </div>
+
+      <div class="container article-body">
+        <div class="article-body__content">
+          <p>Half a million lines of production code. 2,000 files. The full codebase behind Claude Code, the AI coding agent I use every day at Workhorse to build websites, got leaked to the internet last week. Anthropic accidentally published an npm package that included a source map pointing to readable TypeScript source on their servers. A security researcher found it, followed the trail, and the whole thing was mirrored on GitHub within hours.</p>
+
+          <p>I'm not going to show any of the actual source code, and I'd encourage caution if you go looking for it. Anthropic owns the copyright and they've been sending DMCA takedowns. But the insights that came out of people analyzing this codebase are genuinely useful, especially if you're a designer using Claude Code the way I do, as the engine behind agentic web design.</p>
+
+          <p>I went through the breakdowns and pulled out the things that actually matter for how I work. Here's what stood out.</p>
+
+          <h2>It's not a chatbot. It's an agent runtime.</h2>
+
+          <p>Most people think Claude Code is basically Claude but in your terminal. A chatbot that can read your files. That's completely wrong, and the source code proves it.</p>
+
+          <p>Claude Code is a full agent runtime. It's built with Bun, TypeScript, and React. It has a tool system, a command system, a memory system, a permission engine, a task manager, a multi-agent coordinator, and both an MCP client and server, all wired together under one execution pipeline. Your input hits a CLI parser, goes to something called the query engine, calls the LLM API, runs a tool execution loop, and renders results back in your terminal.</p>
+
+          <p>Why does this matter if you're a designer? Because if you're using Claude Code like a chatbot, just typing questions and hoping for good answers, you're using maybe 10% of what it can actually do. The rest of the value is in the systems built around the model. And understanding those systems is what separates someone who spends 10 hours building a full website from someone who spends 10 hours fighting with prompts.</p>
+
+          <h2>There are 85 slash commands. You probably know five of them.</h2>
+
+          <p>The source code revealed roughly 85 slash commands. Most users know /help and maybe /context. That's it. Here are the ones that changed my workflow once I started using them:</p>
+
+          <p><strong>/init</strong> sets up your project context and generates a CLAUDE.md file, which is basically Claude Code's operating manual for your repository. This is huge and I'll come back to it.</p>
+
+          <p><strong>/plan</strong> puts Claude Code into planning mode. Instead of immediately jumping in and editing files, it maps out the full approach first and asks you before it starts touching things. For complex builds, this is essential. It also saves tokens in the long run.</p>
+
+          <p><strong>/compact</strong> compresses your conversation history when things get long. Every message costs tokens, so when you're deep into a build, running /compact keeps the important context and drops the noise. You can even specify what to keep, like "compact but preserve everything about the CMS integration."</p>
+
+          <p><strong>/review</strong> and <strong>/security-review</strong> run structured code review workflows. These aren't afterthoughts. They're dedicated first-class commands, which tells you something about how seriously Anthropic takes review as part of the workflow.</p>
+
+          <p><strong>/cost</strong> shows what you've actually spent in the session. Most people have no idea how much a session costs until they see the bill. Run this early and often.</p>
+
+          <p><strong>/resume</strong> and <strong>/summary</strong> let you pick up between sessions without re-explaining everything. When you're building a site over two or three days, this is the difference between a smooth continuation and starting from scratch every morning.</p>
+
+          <h2>CLAUDE.md is the highest leverage file on your machine</h2>
+
+          <p>The source code reveals that Claude Code has a full memory system, and the center of it is a file called CLAUDE.md. Most people either ignore this file or dump a bunch of random notes into it. That's a mistake.</p>
+
+          <p>CLAUDE.md is not documentation. It's operating context. If Claude Code is an employee, CLAUDE.md is their onboarding document. It tells them how you do things, what matters, what you never do, and how the project is structured.</p>
+
+          <p>The best approach is to keep it short, opinionated, and operational. Things like: we use TypeScript strict mode always. Components go in /components. Never modify the CMS schema without running migrations. Use pnpm, not npm. Design tokens live in tokens.ts. Decision rules, constraints, conventions. Not a novel about your product history.</p>
+
+          <p>For my agentic web design workflow at Workhorse, this file is what makes it possible to maintain consistency across builds. Every session, Claude Code reads it before doing anything. It's the single highest leverage input shaping how the tool behaves.</p>
+
+          <h2>Permissions are why it feels slow</h2>
+
+          <p>If you've used Claude Code, you've hit this. You ask it to build something and it keeps stopping to ask permission. Can I run this? Can I edit this? Can I execute this test? It breaks your flow and it's annoying.</p>
+
+          <p>Most people think the fix is better prompting. It's not. The fix is permissions.</p>
+
+          <p>The source code shows a deep permission system with multiple modes. You can set wildcard permissions, things like "allow all git commands" or "allow all file edits in my src folder." You set the rule once and it just works. In your settings file, you can configure global, user-level, or project-level permissions for things you always want to allow, always deny, or always ask about.</p>
+
+          <p>For my recurring workflows, this was one of the highest-ROI changes I made. I went from babysitting every action to actually being able to let it operate like an agent while I focused on design decisions.</p>
+
+          <h2>It's built for multi-agent work</h2>
+
+          <p>This one surprised me. The source code reveals a full coordinator subsystem with agent tools, team tools, and a task system designed for background and parallel work. The architecture supports splitting work across multiple agents running in parallel. One agent exploring the codebase, another implementing changes, another validating tests.</p>
+
+          <p>In practice, this means you should stop writing monolithic prompts. Instead of "refactor this entire module, update the tests, and fix the documentation" all in one shot, break it up. Let Claude Code decompose the work. Think of it the way I think about my agentic web design process: a research phase, a build phase, a humanization phase, a QA phase. Each step is its own task with its own scope. That's how the architecture was designed to work.</p>
+
+          <h2>MCP is baked into the architecture</h2>
+
+          <p>I've been connecting Claude Code to external tools through MCP (Model Context Protocol) as part of my workflow, and the source code confirms this isn't just a supported feature. It's fundamental to the architecture. Claude Code is both an MCP client and an MCP server. It can connect to external tools and other systems can connect to it.</p>
+
+          <p>Beyond MCP, there's a skills and plugin layer for building repeatable workflows and domain-specific extensions. This is where Claude Code stops being just a coding tool and becomes an integration layer. Connect it to databases, APIs, documentation systems, internal tools. The more you connect, the more useful it gets.</p>
+
+          <p>For web design specifically, the MCP connections to Figma, to CMS systems, to deployment pipelines are what make it possible to go from concept to deployed site in days instead of months.</p>
+
+          <h2>There are features we haven't seen yet</h2>
+
+          <p>The codebase includes checks for something called "userType" with a value of "ant" for Anthropic internal users. Certain capabilities are gated behind internal feature flags. The source references things like voice mode, a system called Kairos, a daemon mode, and a coordinator mode.</p>
+
+          <p>We can't say for sure how different the internal experience is. Some of these could be early prototypes, some might be close to shipping. But it confirms that Claude Code is heavily feature-flagged, meaning what we're using today is a subset of what's already been built and tested. Pay attention to updates. The people who already understand the architecture will be ready to use new features immediately when they land.</p>
+
+          <h2>The real takeaway: design your operating environment</h2>
+
+          <p>The biggest insight from this whole leak isn't any single feature. It's that the top users don't just write better prompts. They design a better operating environment for Claude Code.</p>
+
+          <p>That means keeping CLAUDE.md short and opinionated and updating it regularly. Learning the command surface so you're not just typing into a chat window. Configuring permissions so you're not babysitting every action. Thinking in decomposed phases instead of monolithic prompts. Managing context like it's money, because it literally is. Connecting external tools through MCP. And treating the whole thing like infrastructure, not an app.</p>
+
+          <p>This is exactly how I think about it at Workhorse. Claude Code isn't a tool I open when I need something coded. It's the infrastructure layer that my entire agentic web design process runs on. The source code leak just confirmed that the people who built it think about it the same way.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <hr class="article-divider">
+        <div class="article-more">
+          <h3 class="article-more__heading">More notes</h3>
+          <div class="article-more__grid">
+            <a href="claude-code-architecture.html" class="article-more__link">
+              <p class="article-more__link-tag">AI + Design</p>
+              <p class="article-more__link-title">What Claude Code Actually Is: The Architecture Visual</p>
+            </a>
+            <a href="ai-wont-replace-designers.html" class="article-more__link">
+              <p class="article-more__link-tag">AI + Design</p>
+              <p class="article-more__link-title">Why AI won't replace designers, but designers who use AI will replace those who don't</p>
+            </a>
+            <a href="clarity-problem.html" class="article-more__link">
+              <p class="article-more__link-tag">Brand Strategy</p>
+              <p class="article-more__link-title">The clarity problem most brands don't know they have</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 TJ Cichecki / Workhorse Collective. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
