@@ -766,14 +766,12 @@ button {
   padding: 32px;
 }
 
-.writing__card--has-img .writing__card-content .writing__card-title,
-.writing__card--has-img .writing__card-content .writing__card-date {
+.writing__card--has-img .writing__card-content .writing__card-title {
   transform: translateY(0);
   transition: transform 0.35s ease;
 }
 
-.writing__card--has-img:hover .writing__card-content .writing__card-title,
-.writing__card--has-img:hover .writing__card-content .writing__card-date {
+.writing__card--has-img:hover .writing__card-content .writing__card-title {
   transform: translateY(-8px);
 }
 
