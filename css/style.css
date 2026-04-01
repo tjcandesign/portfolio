@@ -533,6 +533,11 @@ button {
   display: grid;
   grid-template-columns: 1fr;
   gap: 56px;
+  align-items: start;
+}
+
+.background__story {
+  max-width: 500px;
 }
 
 .background__story .section__title {
