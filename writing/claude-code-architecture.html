@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Architecture — Workhorse</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fafafa; color: #111; }
+
+  .page { max-width: 1200px; margin: 0 auto; padding: 60px 80px; }
+
+  /* --- Abstract Art Canvases --- */
+  .art-block {
+    width: 100%; height: 320px; margin-bottom: 60px; position: relative;
+    overflow: hidden; border-radius: 4px;
+  }
+  .art-block canvas { width: 100%; height: 100%; display: block; }
+
+  .art-block-tall { height: 480px; }
+  .art-block-short { height: 200px; }
+
+  /* --- Typography --- */
+  h1 {
+    font-size: 48px; font-weight: 700; letter-spacing: -1.5px;
+    margin-bottom: 10px; color: #000; line-height: 1.1;
+  }
+  .subtitle {
+    font-size: 14px; color: #888; margin-bottom: 50px;
+    font-weight: 400; letter-spacing: 1px; text-transform: uppercase;
+  }
+  h2 {
+    font-size: 14px; text-transform: uppercase; letter-spacing: 2px;
+    color: #999; margin-bottom: 30px; font-weight: 500;
+  }
+
+  /* --- Section Dividers --- */
+  .section { margin-bottom: 80px; }
+  .divider { height: 1px; background: #ddd; margin: 80px 0; }
+
+  /* --- Architecture Flow --- */
+  .arch-flow {
+    display: flex; align-items: center; gap: 0; margin-bottom: 50px;
+  }
+  .arch-step {
+    flex: 1; text-align: center; padding: 24px 12px;
+    border: 1px solid #ddd; background: #fff;
+  }
+  .arch-step:first-child { border-radius: 8px 0 0 8px; }
+  .arch-step:last-child { border-radius: 0 8px 8px 0; }
+  .arch-step .step-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px;
+    color: #bbb; margin-bottom: 8px;
+  }
+  .arch-step .step-name { font-size: 15px; font-weight: 600; color: #111; }
+  .arch-arrow {
+    width: 32px; text-align: center; color: #ccc; font-size: 18px; flex-shrink: 0;
+  }
+
+  /* --- Systems Grid --- */
+  .systems-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .system-card {
+    border: 1px solid #e0e0e0; border-radius: 8px; padding: 28px; background: #fff;
+  }
+  .system-card .card-num {
+    font-size: 12px; color: #ccc; font-weight: 700; margin-bottom: 10px;
+  }
+  .system-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 6px; color: #111; }
+  .system-card p { font-size: 13px; line-height: 1.6; color: #777; }
+  .system-card.highlight { border-color: #000; }
+  .system-card.highlight .card-num { color: #000; }
+
+  /* --- Commands Table --- */
+  .cmd-table { width: 100%; border-collapse: collapse; }
+  .cmd-table th {
+    text-align: left; font-size: 10px; text-transform: uppercase;
+    letter-spacing: 1.5px; color: #bbb; padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+  }
+  .cmd-table td {
+    padding: 16px; border-bottom: 1px solid #eee; vertical-align: top;
+  }
+  .cmd-table tr:hover td { background: #f5f5f5; }
+  .cmd-name {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 15px; font-weight: 600; color: #000;
+  }
+  .cmd-desc { font-size: 13px; color: #888; line-height: 1.5; }
+  .cmd-category {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+    color: #999; background: #f0f0f0; padding: 3px 8px;
+    border-radius: 3px; display: inline-block;
+  }
+
+  /* --- Habits --- */
+  .habits-list { display: flex; flex-direction: column; }
+  .habit-row {
+    display: flex; align-items: stretch;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s;
+  }
+  .habit-row:first-child { border-top: 1px solid #eee; }
+  .habit-num {
+    width: 80px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 42px; font-weight: 700; color: #e0e0e0;
+    border-right: 1px solid #eee;
+    transition: color 0.2s;
+  }
+  .habit-content { padding: 28px 28px; flex: 1; }
+  .habit-content h3 { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 4px; }
+  .habit-content p { font-size: 13px; color: #888; line-height: 1.6; }
+  .habit-row:hover .habit-num { color: #000; }
+  .habit-row:hover { background: #fafafa; }
+
+  /* --- Footer --- */
+  .footer-mark {
+    text-align: center; padding: 50px 0 20px;
+    font-size: 11px; color: #ccc; letter-spacing: 2px; text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HERO ART: Fractured grid / signal noise -->
+  <div class="art-block art-block-tall">
+    <canvas id="art-hero"></canvas>
+  </div>
+
+  <div class="section">
+    <h1>What Claude Code<br>Actually Is</h1>
+    <p class="subtitle">The architecture behind the agent runtime, revealed by the source code leak</p>
+
+    <h2>Execution Pipeline</h2>
+    <div class="arch-flow">
+      <div class="arch-step"><div class="step-label">01</div><div class="step-name">Your Input</div></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-step"><div class="step-label">02</div><div class="step-name">CLI Parser</div></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-step"><div class="step-label">03</div><div class="step-name">Query Engine</div></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-step"><div class="step-label">04</div><div class="step-name">LLM API</div></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-step"><div class="step-label">05</div><div class="step-name">Tool Loop</div></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-step"><div class="step-label">06</div><div class="step-name">Output</div></div>
+    </div>
+  </div>
+
+  <!-- ART: Scattered particles / constellation -->
+  <div class="art-block art-block-short">
+    <canvas id="art-particles"></canvas>
+  </div>
+
+  <div class="section">
+    <h2>Six Core Systems</h2>
+    <div class="systems-grid">
+      <div class="system-card">
+        <div class="card-num">01</div>
+        <h3>Tool System</h3>
+        <p>File operations, code execution, search, and external tool integration via MCP protocol.</p>
+      </div>
+      <div class="system-card">
+        <div class="card-num">02</div>
+        <h3>Command System</h3>
+        <p>85+ slash commands for planning, reviewing, compacting, resuming, and managing sessions.</p>
+      </div>
+      <div class="system-card highlight">
+        <div class="card-num">03</div>
+        <h3>Memory System</h3>
+        <p>CLAUDE.md at the center. User-level, project-level, and extracted memories across sessions.</p>
+      </div>
+      <div class="system-card">
+        <div class="card-num">04</div>
+        <h3>Permission Engine</h3>
+        <p>Granular control with wildcard rules. Allow, deny, or ask for any action at any scope.</p>
+      </div>
+      <div class="system-card">
+        <div class="card-num">05</div>
+        <h3>Multi-Agent Coordinator</h3>
+        <p>Task decomposition, parallel execution, and background work across multiple agents.</p>
+      </div>
+      <div class="system-card">
+        <div class="card-num">06</div>
+        <h3>MCP Client + Server</h3>
+        <p>Both consumes and provides tools. The integration layer for external systems and plugins.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ART: Waveform / interference pattern -->
+  <div class="art-block">
+    <canvas id="art-waves"></canvas>
+  </div>
+
+  <div class="section">
+    <h1>The Commands<br>That Matter</h1>
+    <p class="subtitle">Essential slash commands for designers using Claude Code</p>
+
+    <table class="cmd-table">
+      <thead>
+        <tr>
+          <th style="width: 150px;">Command</th>
+          <th>What it does</th>
+          <th style="width: 100px;">Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="cmd-name">/init</span></td>
+          <td><span class="cmd-desc">Sets up project context. Generates the CLAUDE.md file that shapes every future interaction.</span></td>
+          <td><span class="cmd-category">Setup</span></td>
+        </tr>
+        <tr>
+          <td><span class="cmd-name">/plan</span></td>
+          <td><span class="cmd-desc">Planning mode. Maps out the full approach before touching any files. Essential for complex builds.</span></td>
+          <td><span class="cmd-category">Strategy</span></td>
+        </tr>
+        <tr>
+          <td><span class="cmd-name">/compact</span></td>
+          <td><span class="cmd-desc">Compresses conversation history. Keeps important context, drops noise. Accepts optional focus prompt.</span></td>
+          <td><span class="cmd-category">Tokens</span></td>
+        </tr>
+        <tr>
+          <td><span class="cmd-name">/review</span></td>
+          <td><span class="cmd-desc">Runs a structured code review workflow. First-class command, not an afterthought.</span></td>
+          <td><span class="cmd-category">Quality</span></td>
+        </tr>
+        <tr>
+          <td><span class="cmd-name">/context</span></td>
+          <td><span class="cmd-desc">Manages what files Claude Code is paying attention to. Every file in context costs tokens.</span></td>
+          <td><span class="cmd-category">Tokens</span></td>
+        </tr>
+        <tr>
+          <td><span class="cmd-name">/cost</span></td>
+          <td><span class="cmd-desc">Shows what you've actually spent in the current session. Run this early and often.</span></td>
+          <td><span class="cmd-category">Tokens</span></td>
+        </tr>
+        <tr>
+          <td><span class="cmd-name">/resume</span></td>
+          <td><span class="cmd-desc">Pick up where you left off between sessions without re-explaining everything.</span></td>
+          <td><span class="cmd-category">Workflow</span></td>
+        </tr>
+        <tr>
+          <td><span class="cmd-name">/summary</span></td>
+          <td><span class="cmd-desc">Generates a session summary. Pairs with /resume for multi-day projects.</span></td>
+          <td><span class="cmd-category">Workflow</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ART: Concentric disruption -->
+  <div class="art-block">
+    <canvas id="art-circles"></canvas>
+  </div>
+
+  <div class="section">
+    <h1>7 Habits of Top 1%<br>Claude Code Users</h1>
+    <p class="subtitle">Based on what the source code reveals about how the tool was designed to be used</p>
+
+    <div class="habits-list">
+      <div class="habit-row">
+        <div class="habit-num">1</div>
+        <div class="habit-content">
+          <h3>Treat CLAUDE.md like a force multiplier</h3>
+          <p>Keep it short, opinionated, and operational. Update it regularly. Route to other files. This single file shapes every interaction.</p>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-num">2</div>
+        <div class="habit-content">
+          <h3>Learn the command surface</h3>
+          <p>You don't need all 85 commands. But /plan, /compact, /context, /review, /cost, and /resume will change your daily workflow.</p>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-num">3</div>
+        <div class="habit-content">
+          <h3>Configure permissions for recurring workflows</h3>
+          <p>Stop babysitting every action. Set wildcard rules for the stuff you do every day. Let it operate like an agent.</p>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-num">4</div>
+        <div class="habit-content">
+          <h3>Think in decomposition, not monolithic prompts</h3>
+          <p>Break complex work into phases: research, plan, execute, verify. Let Claude Code use its multi-agent architecture the way it was designed.</p>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-num">5</div>
+        <div class="habit-content">
+          <h3>Manage context like it's money</h3>
+          <p>Because it literally is. Use /compact when conversations get long. Use /context to control what's loaded. Every unnecessary file is tokens you're paying for.</p>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-num">6</div>
+        <div class="habit-content">
+          <h3>Connect everything to it</h3>
+          <p>MCP servers, CLIs, plugins, skills. The more tools Claude Code can access, the more valuable it becomes. Build an ecosystem, not a silo.</p>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-num">7</div>
+        <div class="habit-content">
+          <h3>Treat it like infrastructure, not an app</h3>
+          <p>Model routing, sub-agent overrides, shell behavior, privacy controls. There's real leverage in tuning the environment to fit your workflow.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ART: Closing texture -->
+  <div class="art-block art-block-short">
+    <canvas id="art-closing"></canvas>
+  </div>
+
+  <div class="footer-mark">Workhorse — wrkhrs.co — 2026</div>
+
+</div>
+
+<script>
+// ===== ABSTRACT B&W GENERATIVE ART =====
+
+function initCanvas(id) {
+  const canvas = document.getElementById(id);
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  return { ctx, w: rect.width, h: rect.height };
+}
+
+// --- HERO: Fractured grid with noise displacement ---
+(function() {
+  const { ctx, w, h } = initCanvas('art-hero');
+  ctx.fillStyle = '#fafafa';
+  ctx.fillRect(0, 0, w, h);
+
+  // Seed-based pseudo-random
+  let seed = 42;
+  function rand() { seed = (seed * 16807 + 0) % 2147483647; return (seed - 1) / 2147483646; }
+
+  // Draw fractured grid
+  const cols = 48;
+  const rows = 24;
+  const cellW = w / cols;
+  const cellH = h / rows;
+
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      const cx = x * cellW;
+      const cy = y * cellH;
+
+      // Distance from center creates density gradient
+      const dx = (x / cols - 0.5) * 2;
+      const dy = (y / rows - 0.5) * 2;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const density = Math.max(0, 1 - dist * 1.1);
+
+      if (rand() < density * 0.7) {
+        const displacement = (rand() - 0.5) * 8 * density;
+        const size = cellW * (0.3 + rand() * 0.6);
+        const gray = Math.floor(rand() * 60);
+
+        ctx.fillStyle = `rgba(${gray}, ${gray}, ${gray}, ${0.15 + density * 0.6})`;
+        ctx.fillRect(cx + displacement, cy + displacement, size, size * (0.5 + rand()));
+      }
+
+      // Thin lines
+      if (rand() < density * 0.3) {
+        ctx.strokeStyle = `rgba(0, 0, 0, ${0.05 + density * 0.15})`;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + cellW * (1 + rand()), cy + cellH * rand());
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Overlay: large faded text
+  ctx.fillStyle = 'rgba(0,0,0,0.03)';
+  ctx.font = '600 280px Helvetica Neue, Arial, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('CC', w / 2, h * 0.65);
+})();
+
+// --- PARTICLES: Scattered dots with connecting lines ---
+(function() {
+  const { ctx, w, h } = initCanvas('art-particles');
+  ctx.fillStyle = '#fafafa';
+  ctx.fillRect(0, 0, w, h);
+
+  let seed = 7;
+  function rand() { seed = (seed * 16807 + 0) % 2147483647; return (seed - 1) / 2147483646; }
+
+  const points = [];
+  for (let i = 0; i < 200; i++) {
+    points.push({ x: rand() * w, y: rand() * h, r: 1 + rand() * 3 });
+  }
+
+  // Connect nearby points
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.06)';
+  ctx.lineWidth = 0.5;
+  for (let i = 0; i < points.length; i++) {
+    for (let j = i + 1; j < points.length; j++) {
+      const dx = points[i].x - points[j].x;
+      const dy = points[i].y - points[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 80) {
+        ctx.beginPath();
+        ctx.moveTo(points[i].x, points[i].y);
+        ctx.lineTo(points[j].x, points[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Draw points
+  points.forEach(p => {
+    const gray = Math.floor(rand() * 80);
+    ctx.fillStyle = `rgba(${gray}, ${gray}, ${gray}, ${0.3 + rand() * 0.5})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+})();
+
+// --- WAVES: Interference pattern / waveform ---
+(function() {
+  const { ctx, w, h } = initCanvas('art-waves');
+  ctx.fillStyle = '#fafafa';
+  ctx.fillRect(0, 0, w, h);
+
+  const lines = 80;
+  for (let i = 0; i < lines; i++) {
+    const baseY = (i / lines) * h;
+
+    ctx.strokeStyle = `rgba(0, 0, 0, ${0.08 + (i / lines) * 0.12})`;
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+
+    for (let x = 0; x <= w; x += 2) {
+      const norm = x / w;
+      const wave1 = Math.sin(norm * 12 + i * 0.15) * 20;
+      const wave2 = Math.sin(norm * 6 - i * 0.08) * 15;
+      const wave3 = Math.sin(norm * 24 + i * 0.3) * 5;
+      const envelope = Math.sin(norm * Math.PI) * (0.5 + 0.5 * Math.sin(i * 0.2));
+      const y = baseY + (wave1 + wave2 + wave3) * envelope;
+
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+})();
+
+// --- CIRCLES: Concentric disruption ---
+(function() {
+  const { ctx, w, h } = initCanvas('art-circles');
+  ctx.fillStyle = '#fafafa';
+  ctx.fillRect(0, 0, w, h);
+
+  const cx = w * 0.5;
+  const cy = h * 0.5;
+  const maxR = Math.max(w, h) * 0.5;
+
+  let seed = 13;
+  function rand() { seed = (seed * 16807 + 0) % 2147483647; return (seed - 1) / 2147483646; }
+
+  for (let r = 10; r < maxR; r += 4) {
+    const opacity = Math.max(0.02, 0.15 - (r / maxR) * 0.12);
+    ctx.strokeStyle = `rgba(0, 0, 0, ${opacity})`;
+    ctx.lineWidth = 0.6 + rand() * 0.4;
+
+    ctx.beginPath();
+    for (let a = 0; a < Math.PI * 2; a += 0.02) {
+      const noise = (rand() - 0.5) * (r * 0.04);
+      const px = cx + Math.cos(a) * (r + noise);
+      const py = cy + Math.sin(a) * (r + noise);
+      if (a === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  // Center mark
+  ctx.fillStyle = 'rgba(0,0,0,0.8)';
+  ctx.beginPath();
+  ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+  ctx.fill();
+})();
+
+// --- CLOSING: Horizontal hash texture ---
+(function() {
+  const { ctx, w, h } = initCanvas('art-closing');
+  ctx.fillStyle = '#fafafa';
+  ctx.fillRect(0, 0, w, h);
+
+  let seed = 99;
+  function rand() { seed = (seed * 16807 + 0) % 2147483647; return (seed - 1) / 2147483646; }
+
+  for (let y = 0; y < h; y += 2) {
+    const density = Math.sin((y / h) * Math.PI);
+    for (let x = 0; x < w; x += 3) {
+      if (rand() < density * 0.35) {
+        const len = 2 + rand() * 12;
+        const gray = Math.floor(rand() * 100);
+        ctx.strokeStyle = `rgba(${gray}, ${gray}, ${gray}, ${0.1 + density * 0.3})`;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + len, y + (rand() - 0.5) * 2);
+        ctx.stroke();
+      }
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
