@@ -557,12 +557,11 @@ button {
   margin-bottom: 0;
 }
 
-.background__image-placeholder {
+.background__image {
   width: 100%;
-  aspect-ratio: 4 / 5;
-  background-color: var(--color-border);
   border-radius: var(--radius);
   margin-bottom: 32px;
+  display: block;
 }
 
 .background__details {
