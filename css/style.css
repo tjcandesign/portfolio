@@ -467,8 +467,48 @@ button {
   color: var(--color-text-secondary);
   max-width: 700px;
   margin-top: -36px;
-  margin-bottom: 56px;
+  margin-bottom: 0;
   line-height: 1.7;
+}
+
+.engagements {
+  background-color: #1a1a1a;
+  border-top: 1px solid #2a2a2a;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.engagements .section__title {
+  color: #fff;
+}
+
+.engagements .ai__engagement {
+  background-color: #222;
+}
+
+.engagements .ai__engagement:hover {
+  background-color: #2a2a2a;
+}
+
+.engagements .ai__engagements-grid {
+  background-color: #333;
+  border-color: #333;
+}
+
+.engagements .ai__engagement-title {
+  color: #fff;
+}
+
+.engagements .ai__engagement-desc {
+  color: rgba(255,255,255,0.65);
+}
+
+.engagements .ai__cta .btn {
+  background-color: #fff;
+  color: #1a1a1a;
+}
+
+.engagements .ai__cta .btn:hover {
+  background-color: #e0e0e0;
 }
 
 .ai__intro em {
