@@ -648,7 +648,7 @@ button {
   margin-bottom: 12px;
 }
 
-.writing__card-title {
+.writing__card h3.writing__card-title {
   font-family: var(--font-serif);
   font-size: 1.25rem;
   font-weight: 400;
@@ -657,12 +657,12 @@ button {
   transition: color var(--transition);
 }
 
-.writing__card:hover .writing__card-title {
+.writing__card:hover h3.writing__card-title {
   color: var(--color-text-secondary);
 }
 
-.writing__card-excerpt {
-  font-size: 1rem;
+.writing__card p.writing__card-excerpt {
+  font-size: 0.9375rem;
   color: var(--color-text-secondary);
   line-height: 1.7;
   margin-bottom: 16px;
