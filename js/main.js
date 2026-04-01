@@ -19,6 +19,29 @@ navMenu.querySelectorAll('.nav__link').forEach(link => {
 });
 
 // ========================================
+// Hero — Lazy Load Background + Parallax
+// ========================================
+const heroBg = document.querySelector('.hero__bg');
+
+if (heroBg) {
+  // Lazy load the hero background image
+  const heroImg = new Image();
+  heroImg.src = 'images/Balloon 1.jpg';
+  heroImg.onload = () => {
+    heroBg.classList.add('loaded');
+  };
+
+  // Parallax scroll effect
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const heroHeight = document.querySelector('.hero').offsetHeight;
+    if (scrollY <= heroHeight) {
+      heroBg.style.transform = `translateY(${scrollY * 0.4}px) scale(1.1)`;
+    }
+  }, { passive: true });
+}
+
+// ========================================
 // Scroll-triggered Fade-in (Intersection Observer)
 // ========================================
 const fadeElements = document.querySelectorAll('.fade-in');
