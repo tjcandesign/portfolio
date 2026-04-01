@@ -726,11 +726,11 @@ button {
 
 /* Writing card with image thumbnail */
 .writing__card--has-img {
-  display: block;
-  position: relative;
-  min-height: 320px;
-  max-height: 320px;
+  display: block !important;
+  position: relative !important;
+  height: 380px;
   border: none;
+  overflow: hidden;
 }
 
 .writing__card--has-img .writing__card-img {
@@ -746,7 +746,7 @@ button {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+  background: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.85));
   z-index: 1;
   border-radius: var(--radius);
 }
@@ -767,7 +767,8 @@ button {
 
 .writing__card--has-img .writing__card-title {
   color: #fff;
-  font-size: 1.5rem !important;
+  font-size: clamp(1.75rem, 3vw, 2.25rem) !important;
+  line-height: 1.15 !important;
 }
 
 .writing__card--has-img:hover .writing__card-title {
@@ -776,6 +777,7 @@ button {
 
 .writing__card--has-img .writing__card-excerpt {
   color: rgba(255,255,255,0.75);
+  display: none;
 }
 
 .writing__card--has-img .writing__card-date {
