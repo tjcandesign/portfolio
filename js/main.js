@@ -19,6 +19,22 @@ navMenu.querySelectorAll('.nav__link').forEach(link => {
 });
 
 // ========================================
+// Header Hide on Scroll Down, Show on Scroll Up
+// ========================================
+const siteHeader = document.querySelector('.site-header');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  const currentScrollY = window.scrollY;
+  if (currentScrollY > lastScrollY && currentScrollY > 80) {
+    siteHeader.classList.add('site-header--hidden');
+  } else {
+    siteHeader.classList.remove('site-header--hidden');
+  }
+  lastScrollY = currentScrollY;
+}, { passive: true });
+
+// ========================================
 // Hero — Lazy Load Background + Parallax
 // ========================================
 const heroBg = document.querySelector('.hero__bg');
