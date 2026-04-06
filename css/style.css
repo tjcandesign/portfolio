@@ -807,7 +807,11 @@ button {
 }
 
 .writing__card--has-img:hover .writing__card-title {
-  color: rgba(255,255,255,0.85);
+  color: #fff;
+}
+
+.writing__card--has-img:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .writing__card--has-img .writing__card-excerpt {
