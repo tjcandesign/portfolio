@@ -43,87 +43,83 @@
 
       <div class="container article-body">
         <div class="article-body__content">
-          <p>Half a million lines of production code. 2,000 files. The full codebase behind Claude Code, the AI coding agent I use every day at Workhorse to build websites, got leaked to the internet last week. Anthropic accidentally published an npm package that included a source map pointing to readable TypeScript source on their servers. A security researcher found it, followed the trail, and the whole thing was mirrored on GitHub within hours.</p>
+          <p>So last week, Anthropic shipped an npm package that accidentally included a source map. That source map pointed to readable TypeScript source files on their servers. A security researcher noticed, pulled the thread, and within hours the entire Claude Code codebase was mirrored on GitHub. Half a million lines of production code across about 2,000 files. The tool I build every Workhorse project on, fully exposed.</p>
 
-          <p>I'm not going to show any of the actual source code, and I'd encourage caution if you go looking for it. Anthropic owns the copyright and they've been sending DMCA takedowns. But the insights that came out of people analyzing this codebase are genuinely useful, especially if you're a designer using Claude Code the way I do, as the engine behind agentic web design.</p>
+          <p>I'm not sharing any of the actual source, and be careful if you go digging around for it. Anthropic's been issuing DMCA takedowns, which is their right. But a lot of smart people analyzed what they found before those mirrors went down, and their breakdowns are worth paying attention to, especially if you're a designer running Claude Code the way I do.</p>
 
-          <p>I went through the breakdowns and pulled out the things that actually matter for how I work. Here's what stood out.</p>
+          <p>I spent the weekend going through those analyses. What follows is everything that changed how I think about the tool.</p>
 
           <h2>It's not a chatbot. It's an agent runtime.</h2>
 
-          <p>Most people think Claude Code is basically Claude but in your terminal. A chatbot that can read your files. That's completely wrong, and the source code proves it.</p>
+          <p>I think most designers assume Claude Code is basically Claude in a terminal window. You type, it responds, maybe it can peek at your files. That mental model is completely wrong.</p>
 
-          <p>Claude Code is a full agent runtime. It's built with Bun, TypeScript, and React. It has a tool system, a command system, a memory system, a permission engine, a task manager, a multi-agent coordinator, and both an MCP client and server, all wired together under one execution pipeline. Your input hits a CLI parser, goes to something called the query engine, calls the LLM API, runs a tool execution loop, and renders results back in your terminal.</p>
+          <p>What the source code shows is a full agent runtime built on Bun, TypeScript, and React. There's a tool system, a command system, a memory system, a permission engine, a task manager, a multi-agent coordinator, and MCP support on both the client and server side. When you type something, it passes through a CLI parser into what they call the query engine, which calls the LLM API, enters a tool execution loop, and renders the result back in your terminal. The model is just one piece of a much larger machine.</p>
 
-          <p>Why does this matter if you're a designer? Because if you're using Claude Code like a chatbot, just typing questions and hoping for good answers, you're using maybe 10% of what it can actually do. The rest of the value is in the systems built around the model. And understanding those systems is what separates someone who spends 10 hours building a full website from someone who spends 10 hours fighting with prompts.</p>
+          <p>If you're treating it like a chat window, you're leaving most of the tool on the table. I'd guess 90% of the value lives in the systems wrapped around the model, not the model itself. That gap is the difference between spending a day building a full site versus spending a day arguing with your prompts.</p>
 
           <h2>There are 85 slash commands. You probably know five of them.</h2>
 
-          <p>The source code revealed roughly 85 slash commands. Most users know /help and maybe /context. That's it. Here are the ones that changed my workflow once I started using them:</p>
+          <p>Roughly 85 slash commands showed up in the source. I knew maybe eight before this leak. Most people seem to know /help and /context and that's about it.</p>
 
-          <p><strong>/init</strong> sets up your project context and generates a CLAUDE.md file, which is basically Claude Code's operating manual for your repository. This is huge and I'll come back to it.</p>
+          <p>Here are the ones that actually moved the needle for me:</p>
 
-          <p><strong>/plan</strong> puts Claude Code into planning mode. Instead of immediately jumping in and editing files, it maps out the full approach first and asks you before it starts touching things. For complex builds, this is essential. It also saves tokens in the long run.</p>
+          <p><strong>/init</strong> generates a CLAUDE.md file for your project, which functions as Claude Code's operating manual for your repo. More on this in a second because it deserves its own section.</p>
 
-          <p><strong>/compact</strong> compresses your conversation history when things get long. Every message costs tokens, so when you're deep into a build, running /compact keeps the important context and drops the noise. You can even specify what to keep, like "compact but preserve everything about the CMS integration."</p>
+          <p><strong>/plan</strong> is the one I wish I'd found six months ago. It switches Claude Code into planning mode so it maps out what it wants to do before touching any files. For anything beyond a simple component, I use this by default now. It also burns fewer tokens than letting the agent trial-and-error its way through a build.</p>
 
-          <p><strong>/review</strong> and <strong>/security-review</strong> run structured code review workflows. These aren't afterthoughts. They're dedicated first-class commands, which tells you something about how seriously Anthropic takes review as part of the workflow.</p>
+          <p><strong>/compact</strong> compresses your conversation history. When you're four hours deep into a build and the context window is getting bloated, this trims the fat while keeping what matters. You can even tell it what to preserve: "compact but keep everything about the CMS integration." I run this constantly.</p>
 
-          <p><strong>/cost</strong> shows what you've actually spent in the session. Most people have no idea how much a session costs until they see the bill. Run this early and often.</p>
+          <p><strong>/review</strong> and <strong>/security-review</strong> are full structured review workflows. Not afterthoughts bolted on later. Dedicated first-class commands. That tells you something about how Anthropic thinks about the tool.</p>
 
-          <p><strong>/resume</strong> and <strong>/summary</strong> let you pick up between sessions without re-explaining everything. When you're building a site over two or three days, this is the difference between a smooth continuation and starting from scratch every morning.</p>
+          <p><strong>/cost</strong> shows your actual spend for the session. Just run it. You'll be glad you did before the invoice arrives.</p>
+
+          <p><strong>/resume</strong> and <strong>/summary</strong> let you pick up where you left off between sessions. When a site build stretches across three days, these are the reason I don't have to re-explain the entire project every morning.</p>
 
           <img src="../images/Screenshot 2026-04-01 at 6.33.27 PM.png" alt="Halftone pattern" class="article-img">
 
           <h2>CLAUDE.md is the highest leverage file on your machine</h2>
 
-          <p>The source code reveals that Claude Code has a full memory system, and the center of it is a file called CLAUDE.md. Most people either ignore this file or dump a bunch of random notes into it. That's a mistake.</p>
+          <p>The source confirms that Claude Code has a layered memory system, and CLAUDE.md sits at the center of it. I see a lot of people either skip this file entirely or treat it like a scratchpad. Both approaches waste the most powerful lever you have.</p>
 
-          <p>CLAUDE.md is not documentation. It's operating context. If Claude Code is an employee, CLAUDE.md is their onboarding document. It tells them how you do things, what matters, what you never do, and how the project is structured.</p>
+          <p>Think of it as an onboarding doc for a new hire. You wouldn't hand someone a product history essay and expect good work. You'd give them decision rules. We always use TypeScript strict mode. Components go in /components. Never touch the CMS schema without running migrations. Use pnpm, not npm. Design tokens live in tokens.ts. Keep it short, keep it opinionated, keep it operational.</p>
 
-          <p>The best approach is to keep it short, opinionated, and operational. Things like: we use TypeScript strict mode always. Components go in /components. Never modify the CMS schema without running migrations. Use pnpm, not npm. Design tokens live in tokens.ts. Decision rules, constraints, conventions. Not a novel about your product history.</p>
-
-          <p>For my agentic web design workflow at Workhorse, this file is what makes it possible to maintain consistency across builds. Every session, Claude Code reads it before doing anything. It's the single highest leverage input shaping how the tool behaves.</p>
+          <p>At Workhorse, this file is the reason I can maintain consistency across builds. Claude Code reads it before every session. Nothing else I've found has a bigger impact on output quality, and it takes maybe 20 minutes to write a good one.</p>
 
           <h2>Permissions are why it feels slow</h2>
 
-          <p>If you've used Claude Code, you've hit this. You ask it to build something and it keeps stopping to ask permission. Can I run this? Can I edit this? Can I execute this test? It breaks your flow and it's annoying.</p>
+          <p>You know the thing where Claude Code stops every thirty seconds to ask if it can run a command, edit a file, execute a test? Maddening. I assumed for months that I just needed to prompt better to get around it.</p>
 
-          <p>Most people think the fix is better prompting. It's not. The fix is permissions.</p>
+          <p>Turns out the fix is way more straightforward. The source reveals a deep permission system with wildcard rules. You can set things like "allow all git commands" or "allow all file edits in my src folder" and it just stops asking. You configure these at the global, user, or project level in your settings file. Stuff you always want to allow, stuff you always want to deny, stuff you want it to ask about.</p>
 
-          <p>The source code shows a deep permission system with multiple modes. You can set wildcard permissions, things like "allow all git commands" or "allow all file edits in my src folder." You set the rule once and it just works. In your settings file, you can configure global, user-level, or project-level permissions for things you always want to allow, always deny, or always ask about.</p>
-
-          <p>For my recurring workflows, this was one of the highest-ROI changes I made. I went from babysitting every action to actually being able to let it operate like an agent while I focused on design decisions.</p>
+          <p>Setting up my permissions properly was maybe 15 minutes of work and it completely changed the experience. I went from babysitting every action to actually focusing on design decisions while the agent did its thing in the background.</p>
 
           <h2>It's built for multi-agent work</h2>
 
-          <p>This one surprised me. The source code reveals a full coordinator subsystem with agent tools, team tools, and a task system designed for background and parallel work. The architecture supports splitting work across multiple agents running in parallel. One agent exploring the codebase, another implementing changes, another validating tests.</p>
+          <p>This caught me off guard. The source code reveals a coordinator subsystem with agent tools, team tools, and a task system designed for parallel work. Multiple agents can run simultaneously: one exploring the codebase, another implementing changes, another running tests. The architecture was designed for this from the ground up.</p>
 
-          <p>In practice, this means you should stop writing monolithic prompts. Instead of "refactor this entire module, update the tests, and fix the documentation" all in one shot, break it up. Let Claude Code decompose the work. Think of it the way I think about my agentic web design process: a research phase, a build phase, a humanization phase, a QA phase. Each step is its own task with its own scope. That's how the architecture was designed to work.</p>
+          <p>The practical takeaway is to stop writing massive prompts that try to do everything at once. "Refactor this module, update the tests, and fix the docs" as a single instruction fights the architecture instead of working with it. I've started breaking my builds into the same phases I use for agentic web design at Workhorse: research, build, humanization, QA. Each phase gets its own task and its own scope. The results have been noticeably better since I made that shift.</p>
 
           <h2>MCP is baked into the architecture</h2>
 
-          <p>I've been connecting Claude Code to external tools through MCP (Model Context Protocol) as part of my workflow, and the source code confirms this isn't just a supported feature. It's fundamental to the architecture. Claude Code is both an MCP client and an MCP server. It can connect to external tools and other systems can connect to it.</p>
+          <p>I've been connecting Claude Code to external tools through MCP (Model Context Protocol) for a while now, but I figured it was a bolt-on feature. The source shows otherwise. Claude Code is both an MCP client and an MCP server simultaneously. It can reach out to external tools, and other systems can reach into it. There's also a skills and plugin layer on top of that for building repeatable workflows and domain-specific extensions.</p>
 
-          <p>Beyond MCP, there's a skills and plugin layer for building repeatable workflows and domain-specific extensions. This is where Claude Code stops being just a coding tool and becomes an integration layer. Connect it to databases, APIs, documentation systems, internal tools. The more you connect, the more useful it gets.</p>
-
-          <p>For web design specifically, the MCP connections to Figma, to CMS systems, to deployment pipelines are what make it possible to go from concept to deployed site in days instead of months.</p>
+          <p>This is where it stops being a coding tool and starts being an integration layer. For web design, the MCP connections to Figma, to CMS platforms, to deployment pipelines are the reason I can take a project from concept to deployed site in days. The more tools you wire in, the more useful the whole system gets. I keep adding connections and haven't hit a ceiling yet.</p>
 
           <h2>There are features we haven't seen yet</h2>
 
-          <p>The codebase includes checks for something called "userType" with a value of "ant" for Anthropic internal users. Certain capabilities are gated behind internal feature flags. The source references things like voice mode, a system called Kairos, a daemon mode, and a coordinator mode.</p>
+          <p>Buried in the codebase are checks for a "userType" value of "ant," which gates certain capabilities for Anthropic's internal users. References to voice mode, something called Kairos, a daemon mode, and a coordinator mode all show up in the source. Some of these might be early experiments that never ship. Some might land next month. Hard to say.</p>
 
-          <p>We can't say for sure how different the internal experience is. Some of these could be early prototypes, some might be close to shipping. But it confirms that Claude Code is heavily feature-flagged, meaning what we're using today is a subset of what's already been built and tested. Pay attention to updates. The people who already understand the architecture will be ready to use new features immediately when they land.</p>
+          <p>What's clear is that Claude Code is heavily feature-flagged. We're using a subset of what's already built. Worth keeping an eye on updates, because anyone who already understands the underlying architecture is going to be able to pick up new features immediately.</p>
 
           <img src="../images/Screenshot 2026-04-01 at 6.35.23 PM.png" alt="Data rain pattern" class="article-img">
 
           <h2>The real takeaway: design your operating environment</h2>
 
-          <p>The biggest insight from this whole leak isn't any single feature. It's that the top users don't just write better prompts. They design a better operating environment for Claude Code.</p>
+          <p>If I had to boil this whole leak down to one sentence, it would be this: the people getting the most out of Claude Code aren't writing better prompts. They're building a better environment around the tool.</p>
 
-          <p>That means keeping CLAUDE.md short and opinionated and updating it regularly. Learning the command surface so you're not just typing into a chat window. Configuring permissions so you're not babysitting every action. Thinking in decomposed phases instead of monolithic prompts. Managing context like it's money, because it literally is. Connecting external tools through MCP. And treating the whole thing like infrastructure, not an app.</p>
+          <p>Keep your CLAUDE.md tight and update it as the project evolves. Learn the commands so you're working with the tool's actual capabilities instead of guessing at them. Set up your permissions once and stop fighting the approval flow. Break work into phases. Watch your token spend. Wire in external tools through MCP. Treat the whole setup like infrastructure you maintain, not an app you open.</p>
 
-          <p>This is exactly how I think about it at Workhorse. Claude Code isn't a tool I open when I need something coded. It's the infrastructure layer that my entire agentic web design process runs on. The source code leak just confirmed that the people who built it think about it the same way.</p>
+          <p>That's how I've been running things at Workhorse for a while now. Claude Code isn't something I reach for when I need code written. It's the layer everything else runs on. This leak just showed me that the people who built it were thinking about it the same way the whole time.</p>
         </div>
       </div>
 
