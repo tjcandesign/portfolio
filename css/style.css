@@ -843,6 +843,84 @@ button {
   color: rgba(255,255,255,0.5);
 }
 
+/* Writing card — signup variant */
+.writing__card--signup {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 380px;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  text-align: center;
+  cursor: default;
+}
+
+.writing__card--signup .writing__card-content {
+  padding: 40px 32px;
+  max-width: 320px;
+}
+
+.writing__card--signup .writing__card-title {
+  font-family: var(--font-serif);
+  font-size: 1.75rem !important;
+  line-height: 1.2 !important;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.writing__card--signup .writing__card-excerpt {
+  font-size: 0.9375rem !important;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.signup-form__input {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.signup-form__input:focus {
+  border-color: var(--color-text);
+}
+
+.signup-form__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.signup-form__btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  background: var(--color-text);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity var(--transition);
+}
+
+.signup-form__btn:hover {
+  opacity: 0.85;
+}
+
 /* ========================================
    Personal / Outside the Studio
    ======================================== */
