@@ -865,8 +865,8 @@ button {
   align-items: center;
   justify-content: center;
   height: 380px;
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border);
+  background-color: #1a1a1a;
+  border: none;
   border-radius: var(--radius);
   text-align: center;
   cursor: default;
@@ -874,20 +874,20 @@ button {
 
 .writing__card--signup .writing__card-content {
   padding: 40px 32px;
-  max-width: 320px;
+  max-width: 340px;
 }
 
 .writing__card--signup .writing__card-title {
   font-family: var(--font-serif);
-  font-size: 1.75rem !important;
-  line-height: 1.2 !important;
-  color: var(--color-text);
-  margin-bottom: 8px;
+  font-size: clamp(2rem, 3vw, 2.5rem) !important;
+  line-height: 1.15 !important;
+  color: #fff;
+  margin-bottom: 12px;
 }
 
 .writing__card--signup .writing__card-excerpt {
   font-size: 0.9375rem !important;
-  color: var(--color-text-secondary);
+  color: rgba(255, 255, 255, 0.6);
   line-height: 1.6;
   margin-bottom: 24px;
 }
