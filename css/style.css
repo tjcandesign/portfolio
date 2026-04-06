@@ -491,8 +491,8 @@ button {
 }
 
 .engagements .ai__engagements-grid {
-  background-color: #333;
-  border-color: #333;
+  background-color: transparent;
+  border: none;
 }
 
 .engagements .ai__engagement-title {
