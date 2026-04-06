@@ -152,7 +152,7 @@ button {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-text);
+  color: #fff;
 }
 
 .nav__menu {
@@ -162,10 +162,11 @@ button {
 
 .nav__link {
   font-family: 'Space Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 400;
-  letter-spacing: 0.04em;
-  color: var(--color-text-secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
   transition: color var(--transition);
   position: relative;
 }
@@ -177,12 +178,12 @@ button {
   left: 0;
   width: 0;
   height: 1px;
-  background-color: var(--color-text);
+  background-color: #fff;
   transition: width 0.3s ease;
 }
 
 .nav__link:hover {
-  color: var(--color-text);
+  color: #fff;
 }
 
 .nav__link:hover::after {
