@@ -327,6 +327,16 @@ button {
   line-height: 1.7;
 }
 
+.approach__grid-heading {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-text-secondary);
+  margin-top: 64px;
+  margin-bottom: 24px;
+}
+
 .approach__grid {
   display: grid;
   grid-template-columns: 1fr;
