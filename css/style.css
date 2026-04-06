@@ -127,12 +127,11 @@ button {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(245, 242, 237, 0.72);
   z-index: 100;
-  background-color: rgba(245, 240, 235, 0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--color-border);
+  background: rgba(245, 240, 235, 0.6);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .nav {
@@ -143,10 +142,11 @@ button {
 }
 
 .nav__logo {
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--color-text);
 }
 
@@ -156,14 +156,32 @@ button {
 }
 
 .nav__link {
-  font-size: 0.9375rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
   font-weight: 400;
+  letter-spacing: 0.04em;
   color: var(--color-text-secondary);
   transition: color var(--transition);
+  position: relative;
+}
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-text);
+  transition: width 0.3s ease;
 }
 
 .nav__link:hover {
   color: var(--color-text);
+}
+
+.nav__link:hover::after {
+  width: 100%;
 }
 
 .nav__toggle {
