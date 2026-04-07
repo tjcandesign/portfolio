@@ -517,6 +517,21 @@ button {
   color: #fff;
 }
 
+.engagements__subtitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: -24px;
+  margin-bottom: 16px;
+}
+
+.engagements .ai__intro {
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 48px;
+}
+
 .engagements .ai__engagement {
   background-color: #222;
   border-color: #333;
