@@ -517,7 +517,7 @@ button {
   color: #fff;
 }
 
-.engagements__subtitle {
+.engagements .engagements__subtitle {
   font-family: var(--font-serif);
   font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: 400;
