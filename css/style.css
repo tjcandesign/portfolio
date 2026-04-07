@@ -968,6 +968,10 @@ button {
   align-items: start;
 }
 
+.personal__content .section__title {
+  margin-bottom: 32px;
+}
+
 .personal__content p {
   font-size: 1rem;
   color: var(--color-text-secondary);
