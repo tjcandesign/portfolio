@@ -301,9 +301,9 @@ button {
 
 .hero__tagline {
   font-family: var(--font-sans);
-  font-size: clamp(1rem, 2vw, 1.1875rem);
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
   color: rgba(255, 255, 255, 0.8);
-  max-width: 560px;
+  max-width: 600px;
   margin: 0 auto;
   line-height: 1.7;
   font-weight: 400;
