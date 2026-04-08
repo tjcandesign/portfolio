@@ -338,6 +338,13 @@ button {
    Approach
    ======================================== */
 .approach {
+  background-color: #ffffff;
+  border-top: none;
+  border-bottom: none;
+  padding: clamp(100px, 15vw, 180px) 0;
+}
+
+.approach-rules {
   background-color: #edeae5;
   border-top: none;
   border-bottom: none;
