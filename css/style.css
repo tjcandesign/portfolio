@@ -684,6 +684,50 @@ button {
 }
 
 /* ========================================
+   Studio / DC Innovation Lab
+   ======================================== */
+.studio {
+  background-color: var(--color-bg-card);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.studio__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.studio__content .section__title {
+  margin-bottom: 32px;
+}
+
+.studio__lede {
+  font-size: clamp(1.0625rem, 2vw, 1.1875rem);
+  color: var(--color-text);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.studio__content p {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.8;
+}
+
+.studio__content p:last-child {
+  margin-bottom: 0;
+}
+
+.studio__img {
+  width: 100%;
+  border-radius: var(--radius);
+  display: block;
+}
+
+/* ========================================
    Writing / Notes
    ======================================== */
 .writing {
