@@ -343,6 +343,16 @@ button {
   border-bottom: none;
 }
 
+.approach__eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 16px;
+}
+
 .approach__lede {
   font-size: clamp(1rem, 2vw, 1.125rem);
   color: var(--color-text-secondary);
