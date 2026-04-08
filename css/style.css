@@ -1131,6 +1131,11 @@ button {
     align-items: start;
   }
 
+  .studio__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+
   .personal__grid {
     grid-template-columns: 1.5fr 1fr;
     gap: 64px;
