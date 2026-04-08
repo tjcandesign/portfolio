@@ -686,14 +686,50 @@ button {
 /* ========================================
    Studio / DC Innovation Lab
    ======================================== */
+.studio {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: var(--section-padding) 0;
+}
+
+.studio__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.studio__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  display: block;
+}
+
+.studio__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.studio__content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
 .studio__content .section__title {
+  color: #fff;
   margin-bottom: 24px;
 }
 
 .studio__lede {
   font-size: clamp(1.0625rem, 2vw, 1.1875rem);
-  color: var(--color-text-secondary);
-  max-width: 640px;
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.7;
   margin-bottom: 0;
 }
