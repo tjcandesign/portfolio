@@ -990,6 +990,14 @@ button {
   opacity: 0.85;
 }
 
+.writing__card--signup:hover .writing__card-title {
+  color: #fff;
+}
+
+.writing__card--signup:hover .writing__card-excerpt {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 /* ========================================
    Personal / Outside the Studio
    ======================================== */
