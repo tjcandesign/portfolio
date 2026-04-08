@@ -338,9 +338,9 @@ button {
    Approach
    ======================================== */
 .approach {
-  background-color: var(--color-bg-card);
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
+  background-color: #edeae5;
+  border-top: none;
+  border-bottom: none;
 }
 
 .approach__lede {
