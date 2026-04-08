@@ -359,7 +359,7 @@ button {
   font-size: clamp(1rem, 2vw, 1.125rem);
   color: var(--color-text-secondary);
   max-width: 640px;
-  margin-top: -36px;
+  margin-top: 32px;
   margin-bottom: 0;
   line-height: 1.7;
 }
