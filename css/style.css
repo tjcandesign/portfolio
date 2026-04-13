@@ -1029,6 +1029,10 @@ button {
   align-items: start;
 }
 
+.personal__content {
+  padding-right: 42px;
+}
+
 .personal__content .section__title {
   margin-bottom: 32px;
 }
