@@ -1044,6 +1044,25 @@ button {
   margin-bottom: 0;
 }
 
+.personal__cta {
+  margin-top: 32px;
+  padding: 32px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.personal__cta p {
+  font-size: 1rem;
+  color: var(--color-text);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.personal__cta .btn {
+  display: inline-block;
+}
+
 .personal__images {
   display: flex;
   flex-direction: column;
