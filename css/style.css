@@ -1183,6 +1183,10 @@ button {
   .work__grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .writing__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* ========================================
