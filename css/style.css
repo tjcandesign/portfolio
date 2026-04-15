@@ -664,6 +664,13 @@ button {
   display: block;
 }
 
+.background__wide-image {
+  width: 100%;
+  border-radius: var(--radius);
+  margin-top: 72px;
+  display: block;
+}
+
 .background__details {
   display: flex;
   flex-direction: column;
