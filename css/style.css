@@ -106,9 +106,11 @@ button {
   padding: 14px 36px;
   background-color: var(--color-text);
   color: var(--color-bg);
-  font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   border-radius: 100px;
   letter-spacing: 0.01em;
   transition: background-color var(--transition);
