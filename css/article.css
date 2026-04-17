@@ -138,8 +138,9 @@
 
 .article-hero__tag {
   display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: rgba(255,255,255,0.7);
