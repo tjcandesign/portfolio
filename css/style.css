@@ -148,7 +148,7 @@ button {
 }
 
 .nav__logo {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -162,7 +162,7 @@ button {
 }
 
 .nav__link {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.8125rem;
   font-weight: 400;
   letter-spacing: 0.06em;
@@ -347,7 +347,7 @@ button {
 }
 
 .approach__eyebrow {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -995,7 +995,7 @@ button {
 }
 
 .signup-form__btn {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.06em;
