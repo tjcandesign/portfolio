@@ -81,7 +81,7 @@
 
           <p>The source confirms that Claude Code has a layered memory system, and CLAUDE.md sits at the center of it. I see a lot of people either skip this file entirely or treat it like a scratchpad. Both approaches waste the most powerful lever you have.</p>
 
-          <p>Think of it as an onboarding doc for a new hire. You wouldn't hand someone a product history essay and expect good work. You'd give them decision rules. We always use TypeScript strict mode. Components go in /components. Never touch the CMS schema without running migrations. Use pnpm, not npm. Design tokens live in tokens.ts. Keep it short, keep it opinionated, keep it operational.</p>
+          <p>Think of it as an onboarding doc for a new hire. You wouldn't hand someone a product history essay and expect good work. You'd give them decision rules. We always use TypeScript strict mode. Components go in /components. Never touch the CMS schema without running migrations. Use pnpm, not npm. Design tokens live in tokens.ts. The whole file should stay short and opinionated, focused entirely on the operational stuff that'll actually change how the agent behaves.</p>
 
           <p>At Workhorse, this file is the reason I can maintain consistency across builds. Claude Code reads it before every session. Nothing else I've found has a bigger impact on output quality, and it takes maybe 20 minutes to write a good one.</p>
 
