@@ -945,19 +945,19 @@ button {
 /* Writing card — signup variant */
 .writing__card--signup {
   display: flex !important;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-start;
   height: 380px;
   background-color: #1a1a1a;
   border: none;
   border-radius: var(--radius);
-  text-align: center;
+  text-align: left;
   cursor: default;
 }
 
 .writing__card--signup .writing__card-content {
-  padding: 40px 32px;
-  max-width: 340px;
+  padding: 28px 32px 32px;
+  width: 100%;
 }
 
 .writing__card--signup .writing__card-title {
