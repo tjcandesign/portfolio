@@ -1186,13 +1186,22 @@ button {
    Footer
    ======================================== */
 .footer {
-  padding: 40px 0;
-  text-align: left;
+  padding: 32px 0;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  border-top: 1px solid var(--color-border);
-  letter-spacing: 0.04em;
+  font-size: 0.6875rem;
+  background-color: #111111;
+  color: rgba(255, 255, 255, 0.55);
+  border-top: 1px solid #000;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
 .footer__copyright {
@@ -1200,9 +1209,9 @@ button {
 }
 
 .footer__last-edited {
-  margin: 6px 0 0;
-  color: var(--color-text-muted);
-  opacity: 0.7;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: right;
 }
 
 /* ========================================
