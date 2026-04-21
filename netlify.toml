@@ -1,0 +1,7 @@
+# Netlify deploy config
+# On every push, Netlify runs the build command before publishing.
+# This stamps today's date into the footer's "Last edited" line.
+
+[build]
+  command = "bash scripts/update-last-edited.sh"
+  publish = "."
