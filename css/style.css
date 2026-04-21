@@ -1187,12 +1187,22 @@ button {
    ======================================== */
 .footer {
   padding: 40px 0;
-  text-align: center;
+  text-align: left;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--color-text-muted);
   border-top: 1px solid var(--color-border);
   letter-spacing: 0.04em;
+}
+
+.footer__copyright {
+  margin: 0;
+}
+
+.footer__last-edited {
+  margin: 6px 0 0;
+  color: var(--color-text-muted);
+  opacity: 0.7;
 }
 
 /* ========================================
