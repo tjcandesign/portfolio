@@ -685,7 +685,8 @@ button {
   color: var(--color-text-muted);
   text-align: right;
   margin-top: 12px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .background__details {
