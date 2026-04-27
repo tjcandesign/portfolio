@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projection Mapping Without the Shadows | TJ Cichecki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/article.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="../index.html" class="nav__logo">TJ Cichecki</a>
+      <ul class="nav__menu">
+        <li><a href="../index.html#approach" class="nav__link">Approach</a></li>
+        <li><a href="../index.html#work" class="nav__link">Work</a></li>
+        <li><a href="../index.html#ai" class="nav__link">AI</a></li>
+        <li><a href="../index.html#writing" class="nav__link">Writing</a></li>
+        <li><a href="../index.html#background" class="nav__link">Background</a></li>
+        <li><a href="../index.html#contact" class="nav__link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+      <div class="container">
+        <a href="../index.html#writing" class="article-back">&larr; Back to all notes</a>
+
+        <header class="article-header">
+          <span class="article-header__tag">Spatial Design</span>
+          <h1 class="article-header__title">Projection Mapping Without the Shadows</h1>
+          <p class="article-header__meta">By <span>TJ Cichecki</span> &middot; April 2026</p>
+        </header>
+      </div>
+
+      <div class="container article-body">
+        <div class="article-body__content">
+          <p>For as long as I've been adjacent to projection mapping work, the same problem has been baked into the medium. The moment a person walks in front of a projector, their body cuts a hole in the image. The whole illusion of a building's facade transforming, or a sculpture coming to life, falls apart because there's a person-shaped silhouette breaking the surface. You could engineer around it by ceiling-mounting the projector, designing the audience flow to keep people out of the beam, or accepting that the immersive effect would only work from certain angles. None of those solutions ever felt great.</p>
+
+          <p>That constraint is finally on its way out, and the way it's getting solved is interesting enough that it's worth pulling apart for anyone who does installation, exhibition, or environmental graphics work.</p>
+
+          <h2>How synthetic aperture projection works</h2>
+
+          <p>The trick is to stop relying on a single projector and instead surround the surface with a dense array of smaller ones, all projecting the same image from different angles. When somebody steps into the beam, they only block one or two of the projectors at any given moment, and the rest of the array fills in the area where the shadow would have been. The aggregate light from the surrounding angles keeps the image intact, even as people move through the field. The technique borrows its name from synthetic aperture imaging in radar and astronomy, where many small apertures get combined to produce one effectively larger one.</p>
+
+          <p>It sounds straightforward in theory, but in practice it has been a hard engineering problem because of subpixel misalignment between the overlapping beams. When two or three projectors are pointing at the same surface from different angles, even tiny calibration errors add up to visible blur. The image looks soft, and the whole point of high-resolution projection mapping gets undermined.</p>
+
+          <h2>The Osaka research</h2>
+
+          <p>The most useful recent paper on this comes out of <a href="https://www.xr.sys.es.osaka-u.ac.jp/en/projects/26-03-18-okamoto-tvcg/" target="_blank" rel="noopener">a team at Osaka University led by Daisuke Iwai</a>, who built a tabletop system with 25 projectors mounted in a 2D ceiling array. Their <a href="https://arxiv.org/abs/2603.11551" target="_blank" rel="noopener">full paper</a> covers the technical detail, but the headline result is that they figured out an offline blur compensation method whose computation time stays constant no matter how many projectors are in the array. So you can keep adding projectors to make the system more shadow-resistant without paying a runtime penalty for it.</p>
+
+          <p>The visual result is striking. In the comparison images on the project page, a hand reaches across a tabletop covered in projected text. In the standard projection mapping setup, the hand throws a hard shadow across half the surface. In the synthetic-aperture version, the hand is illuminated from above, the surface text remains intact, and the projection on the surrounding paper looks indistinguishable from print. <a href="https://techxplore.com/news/2026-03-shadowless-images-indistinguishable.html" target="_blank" rel="noopener">A writeup in Tech Xplore</a> covers the user study, where participants struggled to tell projected text from actually printed text on the same sheets of paper.</p>
+
+          <h2>Demo</h2>
+
+          <div class="article-video">
+            <iframe src="https://www.youtube.com/embed/ue1W2vhWk38" title="Shadowless projection mapping demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+
+          <p>Earlier work in this space is also worth a look. The <a href="https://www.youtube.com/watch?v=_SREVKe8QhQ" target="_blank" rel="noopener">2018 Real-Time Human Shadow Removal demo</a> uses depth cameras to track the person and dynamically adjust which projectors fire. It's a different approach than the dense passive array, but it solves the same problem and shows the lineage of the research. There's also some interesting work using <a href="https://dl.acm.org/doi/10.1109/TVCG.2023.3247104" target="_blank" rel="noopener">retrotransmissive optics</a> from a 2023 TVCG paper that achieves shadowless results with a much smaller physical setup.</p>
+
+          <h2>What this opens up for design work</h2>
+
+          <p>The reason projection mapping has stayed mostly architectural is that the audience can't easily walk through the projection field. Once shadows stop being a constraint, the medium opens up to interactive surfaces at human scale, the kind of museum table or retail display where people can lean in, reach into the projection itself, and share physical space with the imagery without one cancelling the other out.</p>
+
+          <p>A lot of the visual conventions of projection-mapped installations are really workarounds for the shadow problem. Viewers get kept behind railings or routed around the beam path, and surfaces get angled so nobody walks into the projection field at the wrong moment. Strip those constraints away and the medium starts to look more like a paintable surface than a stage prop. The design language for that hasn't been figured out yet, which is a fun problem to be early on.</p>
+
+          <h2>Where the tech actually is</h2>
+
+          <p>This is not ready to ship for most commercial projects yet. A 25-projector ceiling array is laboratory equipment. It's expensive, physically substantial, and the calibration is non-trivial. But projector hardware keeps getting smaller and cheaper, the optics research is converging from multiple directions at once, and the trajectory is clear. The earlier work on micro mirror array plates and the newer work on retrotransmissive optics are doing similar things at smaller physical scales. Pick whichever angle you want, the constraint that defined projection mapping for the last twenty years is on its way out.</p>
+
+          <p>I'm watching this space carefully. There's an installation concept on my bench right now that I'd love to revisit if I could trust the projection to stay clean while people interact with it. Most of what gets built in installation contexts has had the shadow problem hovering in the background as the limiting factor on what the audience can actually do inside the work. Take that away and the question of what projection mapping is for opens up considerably.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <hr class="article-divider">
+        <div class="article-more">
+          <h3 class="article-more__heading">More notes</h3>
+          <div class="article-more__grid">
+            <a href="cross-industry-pattern-recognition.html" class="article-more__link">
+              <p class="article-more__link-tag">Process</p>
+              <p class="article-more__link-title">Cross-industry pattern recognition as a design advantage</p>
+            </a>
+            <a href="designers-are-building-again.html" class="article-more__link">
+              <p class="article-more__link-tag">AI + Design</p>
+              <p class="article-more__link-title">Designers Are Building Again</p>
+            </a>
+            <a href="clarity-problem.html" class="article-more__link">
+              <p class="article-more__link-tag">Brand Strategy</p>
+              <p class="article-more__link-title">The clarity problem most brands don't know they have</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__copyright">&copy; 2026 TJ Cichecki. All rights reserved.</p>
+      <p class="footer__last-edited">Last edited <!-- LAST_EDITED:START -->April 26, 2026<!-- LAST_EDITED:END --></p>
+    </div>
+  </footer>
+</body>
+</html>
