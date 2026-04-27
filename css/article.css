@@ -102,6 +102,30 @@
   font-weight: 600;
 }
 
+.article-body__content a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--transition);
+}
+
+.article-body__content a:hover {
+  color: var(--color-text-secondary);
+}
+
+.article-sidebar__label a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color var(--transition);
+}
+
+.article-sidebar__label a:hover {
+  color: var(--color-text);
+}
+
 /* Article hero image with overlay */
 .article-hero {
   position: relative;
