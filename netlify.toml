@@ -5,3 +5,15 @@
 [build]
   command = "bash scripts/update-last-edited.sh"
   publish = "."
+
+# AI Tools Assessment lives on Vercel; proxy it so the URL stays on this domain.
+[[redirects]]
+  from = "/aiassessment"
+  to = "/aiassessment/"
+  status = 301
+
+[[redirects]]
+  from = "/aiassessment/*"
+  to = "https://ai-tools-assessment-virid.vercel.app/:splat"
+  status = 200
+  force = true
