@@ -7,11 +7,9 @@
   publish = "."
 
 # AI Tools Assessment lives on Vercel; proxy it so the URL stays on this domain.
-[[redirects]]
-  from = "/aiassessment"
-  to = "/aiassessment/"
-  status = 301
-
+# Note: Netlify matches redirect paths with or without a trailing slash, so a
+# separate slash-normalizing 301 here would match itself and loop. The
+# assessment site handles the no-slash case client-side instead.
 [[redirects]]
   from = "/aiassessment/*"
   to = "https://ai-tools-assessment-virid.vercel.app/:splat"
