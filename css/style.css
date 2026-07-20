@@ -200,7 +200,7 @@ button {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  background-color: #fff;
+  background-color: #f26419;
   color: #1a1a1a;
   padding: 8px 18px;
   border-radius: 100px;
@@ -208,7 +208,7 @@ button {
 }
 
 .nav__btn:hover {
-  background-color: #e0e0e0;
+  background-color: #ff7a33;
 }
 
 @media (max-width: 767px) {
