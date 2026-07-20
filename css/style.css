@@ -558,6 +558,27 @@ button {
   color: rgba(255,255,255,0.65);
 }
 
+.ai__engagement--wide {
+  grid-column: 1 / -1;
+}
+
+.engagements .ai__engagement-link {
+  display: inline-block;
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  transition: border-color var(--transition);
+}
+
+.engagements .ai__engagement-link:hover {
+  border-color: #fff;
+}
+
 .engagements .ai__cta .btn {
   background-color: #fff;
   color: #1a1a1a;
