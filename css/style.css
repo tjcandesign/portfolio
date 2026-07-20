@@ -193,6 +193,30 @@ button {
   width: 100%;
 }
 
+.nav__btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background-color: #fff;
+  color: #1a1a1a;
+  padding: 8px 18px;
+  border-radius: 100px;
+  transition: background-color var(--transition);
+}
+
+.nav__btn:hover {
+  background-color: #e0e0e0;
+}
+
+@media (max-width: 767px) {
+  .nav__menu .nav__btn {
+    margin: 12px 0 6px;
+  }
+}
+
 .nav__toggle {
   display: none;
   width: 40px;
